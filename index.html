@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Button Magic</title>
+    <!-- Tailwind CSS untuk styling tambahan dan font Inter -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffcce6, #ff99cc);
+            overflow: hidden;
+            transition: background-color 1s ease-in-out;
+        }
+
+        body.blackout {
+            background-color: #000;
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Styling Tombol Hati */
+        .heart-btn {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            background-color: #ff4d88;
+            transform: rotate(45deg);
+            cursor: pointer;
+            box-shadow: 0 0 40px #ff4d88;
+            border: none;
+            outline: none;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 10;
+        }
+
+        .heart-btn:before,
+        .heart-btn:after {
+            content: '';
+            width: 120px;
+            height: 120px;
+            background-color: #ff4d88;
+            border-radius: 50%;
+            position: absolute;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .heart-btn:before {
+            top: -60px;
+            left: 0;
+        }
+
+        .heart-btn:after {
+            top: 0;
+            left: -60px;
+        }
+
+        .heart-btn:not(.active):hover {
+            transform: rotate(45deg) scale(1.1);
+        }
+
+        /* Efek animasi bersinar */
+        .shine {
+            animation: shine-animation 2s ease-in-out infinite alternate;
+        }
+
+        /* Animasi saat tombol diklik */
+        .heart-btn.active {
+            opacity: 0;
+            transform: rotate(45deg) scale(0.5);
+            pointer-events: none;
+        }
+
+        /* --- Video Container --- */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 20;
+        }
+
+        .video-container.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        video {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- Keyframes --- */
+        @keyframes shine-animation {
+            0% { box-shadow: 0 0 10px #ff4d88, 0 0 20px #ff4d8850; }
+            50% { box-shadow: 0 0 30px #ff4d88, 0 0 60px #ff4d8880; }
+            100% { box-shadow: 0 0 10px #ff4d88, 0 0 20px #ff4d8850; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Tombol Hati -->
+        <button id="heartBtn" class="heart-btn shine"></button>
+        
+        <!-- Video Container -->
+        <div id="videoContainer" class="video-container">
+            <video id="myVideo" controls>
+                <source src="my lov.mov" type="video/mp4">
+                Browser Anda tidak mendukung tag video.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        // Mendapatkan elemen-elemen dari DOM
+        const heartBtn = document.getElementById('heartBtn');
+        const videoContainer = document.getElementById('videoContainer');
+        const myVideo = document.getElementById('myVideo');
+        const body = document.body;
+        
+        // Durasi video yang diinginkan (20.5 detik)
+        const videoDuration = 20500;
+        
+        // Variabel untuk melacak status
+        let isProcessing = false;
+
+        // Fungsi untuk menunggu selama durasi tertentu
+        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+        // Fungsi utama yang menjalankan seluruh alur
+        async function startSequence() {
+            if (isProcessing) return;
+            isProcessing = true;
+            
+            // 1. Klik tombol hati dan tampilkan video
+            heartBtn.classList.add('active');
+            heartBtn.classList.remove('shine');
+            videoContainer.classList.add('visible');
+            myVideo.play();
+            
+            // Tunggu 20.5 detik
+            await delay(videoDuration);
+
+            // 2. Setelah video selesai, sembunyikan video
+            myVideo.pause();
+            myVideo.currentTime = 0;
+            videoContainer.classList.remove('visible');
+
+            // 3. Ubah layar menjadi hitam selama 1 detik
+            body.classList.add('blackout');
+            await delay(1000);
+
+            // 4. Redirect ke link Instagram
+            window.location.href = 'https://www.instagram.com/newganfxzx?igsh=M3R2b3drY3k1ZWw3&utm_source=qr';
+        }
+
+        // Menambahkan event listener ke tombol hati
+        heartBtn.addEventListener('click', startSequence);
+    </script>
+</body>
+</html>
