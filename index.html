@@ -115,7 +115,7 @@
             max-width: 90%;
             max-height: 90%;
             border-radius: 1rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 1);
         }
 
         /* --- Keyframes --- */
@@ -134,7 +134,8 @@
         
         <!-- Video Container -->
         <div id="videoContainer" class="video-container">
-            <video id="myVideo" controls>
+            <!-- Menghapus atribut 'controls' agar video tidak bisa di klik atau di pause -->
+            <video id="myVideo" autoplay playsinline>
                 <source src="my lov.mov" type="video/mp4">
                 Browser Anda tidak mendukung tag video.
             </video>
@@ -166,7 +167,6 @@
             heartBtn.classList.add('active');
             heartBtn.classList.remove('shine');
             videoContainer.classList.add('visible');
-            myVideo.play();
             
             // Tunggu 22 detik
             await delay(videoDuration);
@@ -180,7 +180,7 @@
             body.classList.add('blackout');
             await delay(1000);
 
-            // 4. Redirect ke link Instagram
+            // 4. Redirect ke link Instagram yang Anda minta
             window.location.href = 'https://www.instagram.com/newganfxzx?igsh=M3R2b3drY3k1ZWw3&utm_source=qr';
         }
 
